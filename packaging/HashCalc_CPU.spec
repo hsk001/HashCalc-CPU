@@ -1,13 +1,12 @@
-# HashCalc CPU - PyInstaller specification
-# Build from repository root with:
-#   pyinstaller packaging/HashCalc_CPU.spec
-
 from pathlib import Path
 
+# SPECPATH is the directory containing this .spec file.
+# The project root is therefore its parent.
 project_root = Path(SPECPATH).resolve().parent
+script = project_root / "src" / "hashcalc_cpu.py"
 
 a = Analysis(
-    ["src/hashcalc_cpu.py"],
+    [str(script)],
     pathex=[str(project_root)],
     binaries=[],
     datas=[],
