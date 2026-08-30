@@ -1,0 +1,2 @@
+# Runtime: Python standard library only.
+# Packaging: install PyInstaller separately when building the Windows executable.
