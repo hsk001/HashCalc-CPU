@@ -22,6 +22,20 @@ jobs:
       - name: Install PyInstaller
         run: python -m pip install --upgrade pyinstaller
 
+      - name: Verify source tree
+        shell: pwsh
+        run: |
+          Write-Host "Workspace: $env:GITHUB_WORKSPACE"
+          Write-Host "Source files:"
+          Get-ChildItem -Recurse "$env:GITHUB_WORKSPACE\src"
+
+          if (-not (Test-Path "$env:GITHUB_WORKSPACE\src\hashcalc_cpu.py")) {
+              Write-Error "hashcalc_cpu.py was not found"
+              exit 1
+          }
+
+          Write-Host "hashcalc_cpu.py found successfully."
+
       - name: Build executable
         run: pyinstaller packaging/HashCalc_CPU.spec
 
