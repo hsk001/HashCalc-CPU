@@ -4,6 +4,12 @@ A lightweight Windows desktop file hasher and CPU hash benchmark written in Pyth
 
 ## For Windows users — no Python required
 
+- Windows 10 or Windows 11
+- **64-bit Windows (x64)**
+- No Python installation required when using the official Windows executable
+
+> **Note:** The official `HashCalc_CPU.exe` release is built for 64-bit Windows (x64). It does not support 32-bit (x86) Windows.
+
 Download the latest **standalone Windows executable** from the project's GitHub **Releases** page.
 
 The executable bundles the Python runtime and required application components. A separate Python installation is **not required**.
