@@ -4,12 +4,6 @@ A lightweight Windows desktop file hasher and CPU hash benchmark written in Pyth
 
 ## For Windows users — no Python required
 
-- Windows 10 or Windows 11
-- **64-bit Windows (x64)**
-- No Python installation required when using the official Windows executable
-
-> **Note:** The official `HashCalc_CPU.exe` release is built for 64-bit Windows (x64). It does not support 32-bit (x86) Windows.
-
 Download the latest **standalone Windows executable** from the project's GitHub **Releases** page.
 
 The executable bundles the Python runtime and required application components. A separate Python installation is **not required**.
@@ -30,6 +24,34 @@ The source code remains available for inspection, development, and troubleshooti
 - SHA3-512
 - BLAKE2b
 - BLAKE2s
+
+### Input and drag-and-drop
+- Drag and drop files or a folder onto the application window.
+- One dropped file selects **File** mode automatically.
+- Multiple dropped files select **Multiple Files** mode automatically.
+- One dropped folder selects **Folder** mode automatically.
+- Multiple folders are not allowed.
+- Files and folders cannot be mixed in one drop.
+
+### Folder hashing
+- Select a folder instead of a single file.
+- Include subfolders is **off by default**.
+- Include hidden/system files is **off by default**.
+- Hash every included file using the selected algorithms from one read pass.
+- Show relative path, size, hashes, status, and a per-file Copy action for each file.
+- Export folder results as TXT or CSV manifests.
+
+### Multiple file hashing
+- Select or drop multiple files without scanning their containing folders.
+- Hash each selected file once and feed all selected algorithms from the same read pass.
+- Show each file, size, hashes, status, and a per-file Copy action.
+- Export the selected-file results as TXT or CSV.
+
+### Hash export
+- File mode supports TXT and CSV export.
+- Suggested filenames use `<filename>.hashes.txt` or `<filename>.hashes.csv`.
+- Folder exports use `<folder>.hashes.txt` or `<folder>.hashes.csv`.
+- Multiple-file exports use `HashCalc-CPU-hashes.txt` or `HashCalc-CPU-hashes.csv`.
 
 ### Hashing workflow
 - Select only the algorithms you need.
@@ -54,6 +76,15 @@ The verification system does not assume that an expected checksum is SHA-256. It
 - Show the currently running algorithm.
 - Cancel the benchmark safely.
 - Copy benchmark results.
+
+## System Requirements
+
+### Windows
+- Windows 10 or Windows 11
+- **64-bit Windows (x64)**
+- No Python installation required when using the official Windows executable
+
+> The official HashCalc CPU Windows executable is built for 64-bit x86-64 Windows. It does not support 32-bit (x86) Windows.
 
 ## Windows standalone build
 

@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: write
-  
+
 jobs:
   build-windows:
     runs-on: windows-latest
@@ -23,33 +23,13 @@ jobs:
           python-version: "3.11"
 
       - name: Install PyInstaller
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade pyinstaller
-
-      - name: Verify source tree
-        shell: pwsh
-        run: |
-          Write-Host "Workspace: $env:GITHUB_WORKSPACE"
-          Write-Host ""
-          Write-Host "Source files:"
-          Get-ChildItem -Recurse "$env:GITHUB_WORKSPACE\src" | Format-Table FullName, Length
-
-          if (-not (Test-Path "$env:GITHUB_WORKSPACE\src\hashcalc_cpu.py")) {
-              Write-Error "src\hashcalc_cpu.py was not found."
-              exit 1
-          }
-
-          Write-Host ""
-          Write-Host "hashcalc_cpu.py found successfully."
+        run: python -m pip install --upgrade pyinstaller
 
       - name: Run tests
         shell: pwsh
-        run: |
-          python -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -v
 
       - name: Build executable
-        shell: pwsh
         run: |
           python -m PyInstaller `
             --noconfirm `
@@ -62,40 +42,16 @@ jobs:
       - name: Verify executable
         shell: pwsh
         run: |
-          $exe = "dist\HashCalc_CPU.exe"
-
-          if (-not (Test-Path $exe)) {
-              Write-Error "Build failed: $exe was not created."
-              exit 1
+          if (-not (Test-Path "dist\HashCalc_CPU.exe")) {
+            throw "HashCalc_CPU.exe was not created"
           }
-
-          $size = (Get-Item $exe).Length
-
-          Write-Host "Executable created successfully."
-          Write-Host "Path: $exe"
-          Write-Host "Size: $size bytes"
-
-      - name: Create release directory
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force -Path release | Out-Null
 
       - name: Create release archive
         shell: pwsh
         run: |
-          $zip = "release\HashCalc_CPU_Windows.zip"
-
-          if (Test-Path $zip) {
-              Remove-Item $zip -Force
-          }
-
-          Compress-Archive `
-            -Path "dist\HashCalc_CPU.exe" `
-            -DestinationPath $zip `
-            -CompressionLevel Optimal
-
-          Write-Host "Release archive created:"
-          Get-Item $zip | Format-List FullName, Length
+          New-Item -ItemType Directory -Force release | Out-Null
+          Copy-Item dist\HashCalc_CPU.exe release\HashCalc_CPU.exe
+          Compress-Archive -Path release\HashCalc_CPU.exe -DestinationPath release\HashCalc_CPU_Windows.zip -Force
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
